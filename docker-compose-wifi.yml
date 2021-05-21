@@ -9,23 +9,25 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - "${DATABASE_FILE}:/db"
+      - "~/CLionProjects/dms-lite-docker:/db:z"
+    user: "1000:1000"
 
   MQTT-Server:
       container_name: mqtt_broker
       hostname: mosquitto
-      image: eclipse-mosquitto:2.0.10
+      image: eclipse-mosquitto:latest
       ports: 
         - "1883:1883"
       volumes:
-          - ./mosquitto.conf:/home/brentonpoke/CLionProjects/dms-lite-docker/mosquitto.conf
+         - "./mosquitto.conf:/mosquitto/config/mosquitto.conf:z"
+      user: "1000:1000"
 
-  serialwriter:
+  wifiwriter:
       depends_on:
         - "MQTT-Server"
       build:
         dockerfile: Dockerfile
         context: ./Wifi-sql-writer
       volumes:
-        - "${DATABASE_FILE}:/db"
-          
+        - "~/CLionProjects/dms-lite-docker:/db:z"
+      user: "1000:1000"

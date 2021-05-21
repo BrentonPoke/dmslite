@@ -9,7 +9,7 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - "${DATABASE_FILE}:/db"
+      - "~/CLionProjects/dms-lite-docker:/db:z"
   serialwriter:
       depends_on:
         - "web"
@@ -17,6 +17,6 @@ services:
         dockerfile: Dockerfile
         context: ./serial-sql-writer
       volumes:
-        - "${DATABASE_FILE}:/db"
-        - "/dev/ttyUSB0:/dev/ttyUSB0"
+        - "~/CLionProjects/dms-lite-docker:/db:z"
+        - "/dev/ttyUSB0:/dev/ttyUSB0:z"
       privileged: true 

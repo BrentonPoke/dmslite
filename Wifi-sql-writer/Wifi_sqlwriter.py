@@ -38,12 +38,13 @@ def writeToDb(theTime, duckId, topic, messageId, payload, path, hops, duckType):
     conn = sqlite3.connect(dbFile)
     c = conn.cursor()
     print ("Writing to db...")
+    logging.warning("Writing to db...")
     try:
         c.execute("INSERT INTO clusterData VALUES (?,?,?,?,?,?,?,?)", (theTime, duckId, topic, messageId, payload, path, hops, duckType))
         conn.commit()
         conn.close()
     except Error as e:
-        print("Not Correct Packet")
+        loggin.warning("Not Correct Packet")
         print(e)
 
 client = mqtt.Client()
